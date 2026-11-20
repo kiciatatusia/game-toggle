@@ -107,6 +107,30 @@
         }
       }
     },
+    "dev.you.game-toggle": {
+      "name": "Game Activity Toggle",
+      "description": "Włącza i wyłącza pokazywanie aktywności w grach.",
+      "author": "Twój nick",
+      "icon": "GameControllerIcon",
+      "channels": {
+        "latest": "0.7.0"
+      },
+      "versions": {
+        "0.7.0": {
+          "url": "https://kiciatatusia.github.io/game-toggle/pool/dev.you.game-toggle@0.7.0.zip",
+          "sha256": "c0d3108e29fbf03c4e40c3b408497f2b8a75599eb1ed318597479bb66ca24a99",
+          "size": 366,
+          "dependencies": {
+            "valenced.api": {
+              "version": ">=1"
+            },
+            "discord": {
+              "version": "*"
+            }
+          }
+        }
+      }
+    },
     "kiciatatusia.game-toggle": {
       "name": "GameActivityToggle",
       "description": "Adds a toggle in plugin settings (gear icon) to show or hide current game activity",
