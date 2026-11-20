@@ -1,12 +1,16 @@
 {
-  "id": "game-activity-toggle",
+  "format": 1,
+  "id": "kiciatatusia.game-toggle",
   "name": "GameActivityToggle",
   "version": "1.0.0",
   "description": "Toggles showing current game activity with /gametoggle",
-  "authors": [
-    {
-      "name": "kiciatatusia"
+  "author": "kiciatatusia",
+  "dependencies": {
+    "valenced.api": {
+      "version": ">=1"
     }
-  ],
-  "main": "src/index.ts"
+  },
+  "dist": {
+    "script": "index.js"
+  }
 }
