@@ -1,8 +1,8 @@
-import { ToastActionCreators } from '@valenced/discord/actions'
 import FormSwitch from '@valenced/components/FormSwitch'
 import Page from '@valenced/components/Page'
+import { ToastActionCreators } from '@valenced/discord/actions'
 import { TableRow, TableRowGroup } from '@valenced/discord/design'
-import React from '@valenced/react'
+import { createElement, useState } from '@valenced/react'
 
 function getShowGameModule(): any {
 	const metroRequire = (globalThis as any).__r
@@ -23,7 +23,7 @@ function getShowGameModule(): any {
 function SettingsScreen() {
 	const showGameModule = getShowGameModule()
 	const initialValue = showGameModule ? Boolean(showGameModule.getSetting()) : true
-	const [enabled, setEnabled] = React.useState(initialValue)
+	const [enabled, setEnabled] = useState(initialValue)
 
 	const handleToggle = (nextValue: boolean) => {
 		setEnabled(nextValue)
@@ -42,16 +42,16 @@ function SettingsScreen() {
 		}
 	}
 
-	return React.createElement(
+	return createElement(
 		Page,
 		null,
-		React.createElement(
+		createElement(
 			TableRowGroup,
 			{ title: 'Game Activity' },
-			React.createElement(TableRow, {
+			createElement(TableRow, {
 				label: 'Display current activity as a status message',
 				subLabel: 'Quickly toggle your Discord game status on or off',
-				trailing: React.createElement(FormSwitch, {
+				trailing: createElement(FormSwitch, {
 					value: enabled,
 					onValueChange: handleToggle,
 				}),
