@@ -112,7 +112,7 @@
       "description": "Adds a toggle in plugin settings (gear icon) to show or hide current game activity",
       "author": "kiciatatusia",
       "channels": {
-        "latest": "1.0.4"
+        "latest": "1.0.5"
       },
       "versions": {
         "1.0.0": {
@@ -158,6 +158,19 @@
           "url": "https://kiciatatusia.github.io/game-toggle/pool/kiciatatusia.game-toggle@1.0.4.zip",
           "sha256": "4db3f71d82a99301bb4358aeedaafd1e30c8c168b19d1780cb682d174453cead",
           "size": 996,
+          "dependencies": {
+            "valenced.api": {
+              "version": ">=1"
+            },
+            "discord": {
+              "version": "*"
+            }
+          }
+        },
+        "1.0.5": {
+          "url": "https://kiciatatusia.github.io/game-toggle/pool/kiciatatusia.game-toggle@1.0.5.zip",
+          "sha256": "7347cb7d3a82b9bc8033dff9f33c4ec36b97f04da338a819d3f86cb222122bb8",
+          "size": 993,
           "dependencies": {
             "valenced.api": {
               "version": ">=1"
