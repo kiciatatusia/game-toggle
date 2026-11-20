@@ -1,44 +1,38 @@
 import { ToastActionCreators } from '@valenced/discord/actions'
-import { lookupModuleWithImportedPath } from '@valenced/discord/utils/modules/finders'
-import { instead } from '@valenced/patcher'
+import { TableRow, TableRowGroup } from '@valenced/discord/design'
+import { FormSwitch } from '@valenced/components/FormSwitch'
+import { Page } from '@valenced/components/Page'
+import React from '@valenced/react'
 
-let unpatch: (() => void) | undefined
+function getShowGameModule(): any {
+	const metroRequire = (globalThis as any).__r
+	if (!metroRequire?.c) return null
 
-function toggleGameActivity() {
-	try {
-		// Szukamy wewnętrznego modułu ustawień Discorda (ShowCurrentGame)
-		const settingsMod = lookupModuleWithImportedPath<any>(
-			'modules/settings/UserSettingsProtoStore.tsx',
-		)?.[0]
-
-		const protoUtils = lookupModuleWithImportedPath<any>(
-			'utils/UserSettingsProtoUtils.tsx',
-		)?.[0]
-
-		// Uniwersalne wyszukiwanie obiektu ShowCurrentGame w modułach Metro
-		let showGameSetting: any = null
-		const metroRequire = (globalThis as any).__r
-		if (metroRequire?.c) {
-			for (const id in metroRequire.c) {
-				const exp = metroRequire.c[id]?.exports
-				if (exp?.ShowCurrentGame?.updateSetting) {
-					showGameSetting = exp.ShowCurrentGame
-					break
-				}
-				if (exp?.default?.ShowCurrentGame?.updateSetting) {
-					showGameSetting = exp.default.ShowCurrentGame
-					break
-				}
-			}
+	for (const id in metroRequire.c) {
+		const exp = metroRequire.c[id]?.exports
+		if (exp?.ShowCurrentGame?.updateSetting) {
+			return exp.ShowCurrentGame
 		}
+		if (exp?.default?.ShowCurrentGame?.updateSetting) {
+			return exp.default.ShowCurrentGame
+		}
+	}
+	return null
+}
 
-		if (showGameSetting) {
-			const current = Boolean(showGameSetting.getSetting())
-			const next = !current
-			showGameSetting.updateSetting(next)
+function SettingsScreen() {
+	const showGameModule = getShowGameModule()
+	const initialValue = showGameModule ? Boolean(showGameModule.getSetting()) : true
+	const [enabled, setEnabled] = React.useState(initialValue)
+
+	const handleToggle = (nextValue: boolean) => {
+		setEnabled(nextValue)
+		const mod = getShowGameModule()
+		if (mod) {
+			mod.updateSetting(nextValue)
 			ToastActionCreators?.open?.({
 				key: 'game-toggle-toast',
-				content: next ? 'Game activity: ON' : 'Game activity: OFF',
+				content: nextValue ? 'Game activity: ON' : 'Game activity: OFF',
 			})
 		} else {
 			ToastActionCreators?.open?.({
@@ -46,34 +40,28 @@ function toggleGameActivity() {
 				content: 'Could not find ShowCurrentGame setting',
 			})
 		}
-	} catch (e) {
-		ToastActionCreators?.open?.({
-			key: 'game-toggle-toast',
-			content: `Toggle error: ${String(e)}`,
-		})
 	}
+
+	return React.createElement(
+		Page,
+		null,
+		React.createElement(
+			TableRowGroup,
+			{ title: 'Game Activity' },
+			React.createElement(TableRow, {
+				label: 'Display current activity as a status message',
+				subLabel: 'Quickly toggle your Discord game status on or off',
+				trailing: React.createElement(FormSwitch, {
+					value: enabled,
+					onValueChange: handleToggle,
+				}),
+			}),
+		),
+	)
 }
 
 export default plugin({
-	start() {
-		// Przechwytujemy wysyłanie wiadomości z treścią "/gametoggle"
-		const MessageActions = lookupModuleWithImportedPath<any>(
-			'actions/MessageActionCreators.tsx',
-		)?.[0]?.default
-
-		if (MessageActions?.sendMessage) {
-			unpatch = instead(MessageActions, 'sendMessage', (args, orig) => {
-				const content = args?.[1]?.content?.trim()?.toLowerCase()
-				if (content === '/gametoggle') {
-					toggleGameActivity()
-					return Promise.resolve()
-				}
-				return orig.apply(this, args)
-			})
-		}
-	},
-	stop() {
-		unpatch?.()
-	},
+	SettingsComponent: SettingsScreen,
+	start() {},
+	stop() {},
 })
-					
