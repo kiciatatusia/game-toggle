@@ -2,7 +2,7 @@
   "format": 1,
   "id": "kiciatatusia.game-toggle",
   "name": "GameActivityToggle",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Adds a toggle in plugin settings (gear icon) to show or hide current game activity",
   "author": "kiciatatusia",
   "dependencies": {
