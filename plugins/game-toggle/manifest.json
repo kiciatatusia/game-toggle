@@ -1,1 +1,12 @@
-
+{
+  "name": "GameActivityToggle",
+  "description": "turn on and turn off game activity /gametoggle",
+  "authors": [
+    {
+      "name": "kiciatatusia"
+    }
+  ],
+  "dist": {
+    "script": "src/index.ts"
+  }
+}
