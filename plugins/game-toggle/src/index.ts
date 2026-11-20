@@ -1,67 +1,53 @@
-import FormSwitch from '@valenced/components/FormSwitch'
-import Page from '@valenced/components/Page'
+import { Design } from '@valenced/discord/design'
 import { ToastActionCreators } from '@valenced/discord/actions'
-import { TableRow, TableRowGroup } from '@valenced/discord/design'
-import { createElement, useState } from '@valenced/react'
+import { lookupModules } from '@valenced/modules/finders'
+import { withProps } from '@valenced/modules/finders/filters'
 
-function getShowGameModule(): any {
-	const metroRequire = (globalThis as any).__r
-	if (!metroRequire?.c) return null
-
-	for (const id in metroRequire.c) {
-		const exp = metroRequire.c[id]?.exports
-		if (exp?.ShowCurrentGame?.updateSetting) {
-			return exp.ShowCurrentGame
-		}
-		if (exp?.default?.ShowCurrentGame?.updateSetting) {
-			return exp.default.ShowCurrentGame
-		}
-	}
-	return null
+interface Settings {
+    enabled: boolean
 }
 
-function SettingsScreen() {
-	const showGameModule = getShowGameModule()
-	const initialValue = showGameModule ? Boolean(showGameModule.getSetting()) : true
-	const [enabled, setEnabled] = useState(initialValue)
-
-	const handleToggle = (nextValue: boolean) => {
-		setEnabled(nextValue)
-		const mod = getShowGameModule()
-		if (mod) {
-			mod.updateSetting(nextValue)
-			ToastActionCreators?.open?.({
-				key: 'game-toggle-toast',
-				content: nextValue ? 'Game activity: ON' : 'Game activity: OFF',
-			})
-		} else {
-			ToastActionCreators?.open?.({
-				key: 'game-toggle-toast',
-				content: 'Could not find ShowCurrentGame setting',
-			})
-		}
-	}
-
-	return createElement(
-		Page,
-		null,
-		createElement(
-			TableRowGroup,
-			{ title: 'Game Activity' },
-			createElement(TableRow, {
-				label: 'Display current activity as a status message',
-				subLabel: 'Quickly toggle your Discord game status on or off',
-				trailing: createElement(FormSwitch, {
-					value: enabled,
-					onValueChange: handleToggle,
-				}),
-			}),
-		),
-	)
+function findShowGame(): any {
+    for (const [exp] of lookupModules(withProps('ShowCurrentGame'))) {
+        const s = exp?.ShowCurrentGame ?? exp?.default?.ShowCurrentGame
+        if (typeof s?.updateSetting === 'function') return s
+    }
+    return null
 }
 
-export default plugin({
-	SettingsComponent: SettingsScreen,
-	start() {},
-	stop() {},
+export default plugin<{ jsonStorage: Settings }>({
+    jsonStorage: {
+        load: true,
+        default: { enabled: true },
+    },
+    SettingsComponent({ api }) {
+        const { TableRowGroup, TableSwitchRow } = Design
+        const settings = api.jsonStorage.use()
+        const setting = findShowGame()
+
+        const toggle = (enabled: boolean) => {
+            api.jsonStorage.set({ enabled })
+            try {
+                if (!setting) throw new Error('ShowCurrentGame not found')
+                setting.updateSetting(enabled)
+                ToastActionCreators.open('game-toggle', {
+                    text: enabled ? 'Game activity: ON' : 'Game activity: OFF',
+                    variant: 'success',
+                })
+            } catch (e) {
+                console.error('game-toggle', e)
+            }
+        }
+
+        return (
+            <TableRowGroup title="Game Activity">
+                <TableSwitchRow
+                    label="Display current activity as a status message"
+                    subLabel={setting ? undefined : 'Nie znaleziono ShowCurrentGame'}
+                    value={settings?.enabled ?? true}
+                    onValueChange={toggle}
+                />
+            </TableRowGroup>
+        )
+    },
 })
