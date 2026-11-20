@@ -1,8 +1,6 @@
 import { ToastActionCreators } from '@valenced/discord/actions'
-import { TableRow, TableRowGroup } from '@valenced/discord/design'
-import { FormSwitch } from '@valenced/components/FormSwitch'
-import { Page } from '@valenced/components/Page'
 import React from '@valenced/react'
+import { Switch, Text, View } from '@valenced/react/native'
 
 function getShowGameModule(): any {
 	const metroRequire = (globalThis as any).__r
@@ -43,20 +41,17 @@ function SettingsScreen() {
 	}
 
 	return React.createElement(
-		Page,
-		null,
+		View,
+		{ style: { padding: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' } },
 		React.createElement(
-			TableRowGroup,
-			{ title: 'Game Activity' },
-			React.createElement(TableRow, {
-				label: 'Display current activity as a status message',
-				subLabel: 'Quickly toggle your Discord game status on or off',
-				trailing: React.createElement(FormSwitch, {
-					value: enabled,
-					onValueChange: handleToggle,
-				}),
-			}),
+			Text,
+			{ style: { color: '#ffffff', fontSize: 16, fontWeight: '600' } },
+			'Show Current Game Activity',
 		),
+		React.createElement(Switch, {
+			value: enabled,
+			onValueChange: handleToggle,
+		}),
 	)
 }
 
