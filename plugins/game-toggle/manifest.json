@@ -1,12 +1,12 @@
 {
+  "id": "game-activity-toggle",
   "name": "GameActivityToggle",
-  "description": "turn on and turn off game activity /gametoggle",
+  "version": "1.0.0",
+  "description": "Toggles showing current game activity with /gametoggle",
   "authors": [
     {
       "name": "kiciatatusia"
     }
   ],
-  "dist": {
-    "script": "src/index.ts"
-  }
+  "main": "src/index.ts"
 }
