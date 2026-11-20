@@ -109,16 +109,29 @@
     },
     "kiciatatusia.game-toggle": {
       "name": "GameActivityToggle",
-      "description": "Toggles showing current game activity with /gametoggle",
+      "description": "Toggles showing current game activity by sending /gametoggle",
       "author": "kiciatatusia",
       "channels": {
-        "latest": "1.0.0"
+        "latest": "1.0.1"
       },
       "versions": {
         "1.0.0": {
           "url": "https://kiciatatusia.github.io/game-toggle/pool/kiciatatusia.game-toggle@1.0.0.zip",
           "sha256": "3b078484ec8fb9c80a11be6c07268c4d1b79d6fdd8f785d7f6342afdc625052f",
           "size": 564,
+          "dependencies": {
+            "valenced.api": {
+              "version": ">=1"
+            },
+            "discord": {
+              "version": "*"
+            }
+          }
+        },
+        "1.0.1": {
+          "url": "https://kiciatatusia.github.io/game-toggle/pool/kiciatatusia.game-toggle@1.0.1.zip",
+          "sha256": "7d0ab7a02305f0ea6f1a77e80d5ebba3a8bd220438fcef0c493ac04b6a89752f",
+          "size": 997,
           "dependencies": {
             "valenced.api": {
               "version": ">=1"
