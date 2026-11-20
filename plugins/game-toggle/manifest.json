@@ -2,8 +2,8 @@
   "format": 1,
   "id": "kiciatatusia.game-toggle",
   "name": "GameActivityToggle",
-  "version": "1.0.1",
-  "description": "Toggles showing current game activity by sending /gametoggle",
+  "version": "1.0.3",
+  "description": "Adds a toggle in plugin settings (gear icon) to show or hide current game activity",
   "author": "kiciatatusia",
   "dependencies": {
     "valenced.api": {
