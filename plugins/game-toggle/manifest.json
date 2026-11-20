@@ -1,0 +1,14 @@
+{
+    "format": 1,
+    "id": "dev.you.game-toggle",
+    "name": "Game Activity Toggle",
+    "author": "Twój nick",
+    "description": "Włącza i wyłącza pokazywanie aktywności w grach.",
+    "icon": "GameControllerIcon",
+    "version": "0.7.0",
+    "dependencies": {
+        "valenced.api": { "version": ">=1" },
+        "discord": { "version": "*" }
+    },
+    "dist": { "script": "index.js" }
+}
