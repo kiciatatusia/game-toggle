@@ -137,7 +137,7 @@
       "author": "kiciatatusia",
       "icon": "GameControllerIcon",
       "channels": {
-        "latest": "1.1.4"
+        "latest": "1.1.5"
       },
       "versions": {
         "1.0.0": {
@@ -248,6 +248,19 @@
           "url": "https://kiciatatusia.github.io/game-toggle/pool/kiciatatusia.game-toggle@1.1.4.zip",
           "sha256": "e6a60b3e30beb39d4035b2ec7c33676441a0dff671622d0bc9b3b021cd740ec8",
           "size": 1244,
+          "dependencies": {
+            "valenced.api": {
+              "version": ">=1"
+            },
+            "discord": {
+              "version": "*"
+            }
+          }
+        },
+        "1.1.5": {
+          "url": "https://kiciatatusia.github.io/game-toggle/pool/kiciatatusia.game-toggle@1.1.5.zip",
+          "sha256": "237d826baa5d2b50bf6308920cc747ac7ce2f2c7c5a4c7bff8e27b762f6fe351",
+          "size": 1050,
           "dependencies": {
             "valenced.api": {
               "version": ">=1"
