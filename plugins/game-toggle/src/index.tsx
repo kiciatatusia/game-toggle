@@ -29,11 +29,10 @@ export default plugin<{ jsonStorage: Settings }>({
     },
 
     start({ cleanup }) {
-        console.log('[game-toggle] started')
-
-        // Scout: logs component names that look like a tab bar,
-        // so we can find the bottom bar component.
+        // Temporary scout: shows names of tab-bar-like components as toasts.
+        // Will be removed once the bottom bar component is identified.
         const seen = new Set<string>()
+        let shown = 0
         const scan = (args: any[]) => {
             const type = args[0]
             if (typeof type !== 'function' && typeof type !== 'object') return
@@ -41,6 +40,13 @@ export default plugin<{ jsonStorage: Settings }>({
             if (name && /tab|bottom|nav/i.test(name) && !seen.has(name)) {
                 seen.add(name)
                 console.log('[tab-scout]', name)
+                if (shown < 8) {
+                    shown++
+                    ToastActionCreators.open('tab-scout-' + name, {
+                        text: 'scout: ' + name,
+                        variant: 'success',
+                    })
+                }
             }
         }
         cleanup(after(ReactJSXRuntime, 'jsx', (args: any[]) => { scan(args) }))
