@@ -133,11 +133,11 @@
     },
     "kiciatatusia.game-toggle": {
       "name": "Game Activity Toggle",
-      "description": "Włącza i wyłącza pokazywanie aktywności w grach.",
+      "description": "Quickly turn your game activity status on or off.",
       "author": "kiciatatusia",
       "icon": "GameControllerIcon",
       "channels": {
-        "latest": "1.1.1"
+        "latest": "1.1.2"
       },
       "versions": {
         "1.0.0": {
@@ -209,6 +209,19 @@
           "url": "https://kiciatatusia.github.io/game-toggle/pool/kiciatatusia.game-toggle@1.1.1.zip",
           "sha256": "5590c074f0893175d6602a6d4d7568bb4081e803f1befc1082f8b9563352eeec",
           "size": 1047,
+          "dependencies": {
+            "valenced.api": {
+              "version": ">=1"
+            },
+            "discord": {
+              "version": "*"
+            }
+          }
+        },
+        "1.1.2": {
+          "url": "https://kiciatatusia.github.io/game-toggle/pool/kiciatatusia.game-toggle@1.1.2.zip",
+          "sha256": "f959174674c730a6791f6cb23f6dadd3dbeccbd0d0b525abcfa74961c26b5bc4",
+          "size": 1100,
           "dependencies": {
             "valenced.api": {
               "version": ">=1"
