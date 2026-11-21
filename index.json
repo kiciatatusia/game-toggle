@@ -132,11 +132,12 @@
       }
     },
     "kiciatatusia.game-toggle": {
-      "name": "GameActivityToggle",
-      "description": "Adds a toggle in plugin settings (gear icon) to show or hide current game activity",
+      "name": "Game Activity Toggle",
+      "description": "Włącza i wyłącza pokazywanie aktywności w grach.",
       "author": "kiciatatusia",
+      "icon": "GameControllerIcon",
       "channels": {
-        "latest": "1.0.5"
+        "latest": "1.1.1"
       },
       "versions": {
         "1.0.0": {
@@ -195,6 +196,19 @@
           "url": "https://kiciatatusia.github.io/game-toggle/pool/kiciatatusia.game-toggle@1.0.5.zip",
           "sha256": "7347cb7d3a82b9bc8033dff9f33c4ec36b97f04da338a819d3f86cb222122bb8",
           "size": 993,
+          "dependencies": {
+            "valenced.api": {
+              "version": ">=1"
+            },
+            "discord": {
+              "version": "*"
+            }
+          }
+        },
+        "1.1.1": {
+          "url": "https://kiciatatusia.github.io/game-toggle/pool/kiciatatusia.game-toggle@1.1.1.zip",
+          "sha256": "5590c074f0893175d6602a6d4d7568bb4081e803f1befc1082f8b9563352eeec",
+          "size": 1047,
           "dependencies": {
             "valenced.api": {
               "version": ">=1"
