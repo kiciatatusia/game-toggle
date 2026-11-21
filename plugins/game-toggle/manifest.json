@@ -3,9 +3,9 @@
     "id": "kiciatatusia.game-toggle",
     "name": "Game Activity Toggle",
     "author": "kiciatatusia",
-    "description": "Włącza i wyłącza pokazywanie aktywności w grach.",
+    "description": "Quickly turn your game activity status on or off.",
     "icon": "GameControllerIcon",
-    "version": "1.1.1",
+    "version": "1.1.2",
     "dependencies": {
         "valenced.api": { "version": ">=1" },
         "discord": { "version": "*" }
