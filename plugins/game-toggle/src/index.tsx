@@ -8,9 +8,13 @@ interface Settings {
 }
 
 function findShowGame(): any {
-    for (const [exp] of lookupModules(withProps('ShowCurrentGame'))) {
-        const s = exp?.ShowCurrentGame ?? exp?.default?.ShowCurrentGame
-        if (typeof s?.updateSetting === 'function') return s
+    try {
+        for (const [exp] of lookupModules(withProps('ShowCurrentGame'))) {
+            const s = exp?.ShowCurrentGame ?? exp?.default?.ShowCurrentGame
+            if (typeof s?.updateSetting === 'function') return s
+        }
+    } catch (e) {
+        console.error('[game-toggle] lookup failed', e)
     }
     return null
 }
@@ -20,6 +24,15 @@ export default plugin<{ jsonStorage: Settings }>({
         load: true,
         default: { enabled: true },
     },
+
+    start() {
+        console.log('[game-toggle] started')
+        ToastActionCreators.open('game-toggle-start', {
+            text: 'Game toggle załadowany',
+            variant: 'success',
+        })
+    },
+
     SettingsComponent({ api }) {
         const { TableRowGroup, TableSwitchRow } = Design
         const settings = api.jsonStorage.use()
@@ -35,7 +48,7 @@ export default plugin<{ jsonStorage: Settings }>({
                     variant: 'success',
                 })
             } catch (e) {
-                console.error('game-toggle', e)
+                console.error('[game-toggle]', e)
             }
         }
 
