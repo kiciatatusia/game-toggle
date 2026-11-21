@@ -7,7 +7,6 @@ interface Settings {
     enabled: boolean
 }
 
-// Finds Discord's ShowCurrentGame user setting module.
 function findShowGame(): any {
     try {
         for (const [exp] of lookupModules(withProps('ShowCurrentGame'))) {
@@ -24,6 +23,14 @@ export default plugin<{ jsonStorage: Settings }>({
     jsonStorage: {
         load: true,
         default: { enabled: true },
+    },
+
+    start() {
+        console.log('[game-toggle] started')
+        ToastActionCreators.open('game-toggle-start', {
+            text: 'Game toggle załadowany',
+            variant: 'success',
+        })
     },
 
     SettingsComponent({ api }) {
@@ -49,7 +56,7 @@ export default plugin<{ jsonStorage: Settings }>({
             <TableRowGroup title="Game Activity">
                 <TableSwitchRow
                     label="Display current activity as a status message"
-                    subLabel={setting ? undefined : 'ShowCurrentGame setting not found'}
+                    subLabel={setting ? undefined : 'Nie znaleziono ShowCurrentGame'}
                     value={settings?.enabled ?? true}
                     onValueChange={toggle}
                 />
